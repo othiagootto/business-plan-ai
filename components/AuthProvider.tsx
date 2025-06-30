@@ -64,9 +64,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       setLoading(false);
       return {};
-    } catch (err: any) {
+    } catch (err: unknown) {
       setLoading(false);
-      return { error: err?.message || 'Erro desconhecido ao criar conta.' };
+      const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido ao criar conta.';
+      return { error: errorMessage };
     }
   };
 

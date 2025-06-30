@@ -2,11 +2,7 @@
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
-  swcMinify: true,
   compress: true,
-  experimental: {
-    serverActions: true,
-  },
   async headers() {
     return [
       {

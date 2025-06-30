@@ -13,16 +13,21 @@ export default function ConfirmPage() {
 
   useEffect(() => {
     const handleEmailConfirmation = async () => {
+      const token_hash = searchParams.get('token_hash');
+      const type = searchParams.get('type');
+
+      if (!token_hash || !type) {
+        setStatus('error');
+        setMessage('Parâmetros de confirmação ausentes ou inválidos.');
+        return;
+      }
+      if (type !== 'signup') {
+        setStatus('error');
+        setMessage('Tipo de confirmação inválido.');
+        return;
+      }
+
       try {
-        const token_hash = searchParams.get('token_hash');
-        const type = searchParams.get('type');
-
-        if (!token_hash || type !== 'signup') {
-          setStatus('error');
-          setMessage('Link de confirmação inválido.');
-          return;
-        }
-
         const { error } = await supabase.auth.verifyOtp({
           token_hash,
           type: 'signup',
@@ -36,7 +41,7 @@ export default function ConfirmPage() {
           setMessage('Email confirmado com sucesso! Redirecionando...');
           setTimeout(() => router.push('/dashboard'), 2000);
         }
-      } catch (err) {
+      } catch {
         setStatus('error');
         setMessage('Erro ao confirmar email. Tente novamente.');
       }
