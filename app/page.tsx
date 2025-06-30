@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { CheckCircle, Rocket, User, Users, Star, Shield, HelpCircle, TrendingUp, Smile, DollarSign } from 'lucide-react';
+import { CheckCircle, Rocket, User, Users, Star, Shield, HelpCircle, TrendingUp, Smile } from 'lucide-react';
 import Button from '../components/ui/button';
 import Card from '../components/ui/card';
 import { useEffect } from 'react';
@@ -8,12 +8,15 @@ import { useEffect } from 'react';
 export default function HomePage() {
   // Smooth scroll para âncoras
   useEffect(() => {
-    const handleClick = (e: any) => {
-      if (e.target.matches('a[href^="#"]')) {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && target.matches('a[href^="#"]')) {
         e.preventDefault();
-        const id = e.target.getAttribute('href').replace('#', '');
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        const id = target.getAttribute('href')?.replace('#', '');
+        if (id) {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     };
     document.addEventListener('click', handleClick);
