@@ -1,11 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '../../../lib/supabase';
 import Card from '../../../components/ui/card';
 import Button from '../../../components/ui/button';
 
-export default function ConfirmPage() {
+function ConfirmContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('');
   const searchParams = useSearchParams();
@@ -81,5 +81,24 @@ export default function ConfirmPage() {
         )}
       </Card>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <Card className="max-w-md w-full p-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Carregando...</h1>
+        <p className="text-gray-600">Preparando confirmação de email.</p>
+      </Card>
+    </div>
+  );
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ConfirmContent />
+    </Suspense>
   );
 } 
