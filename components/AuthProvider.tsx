@@ -45,14 +45,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (name: string, email: string, password: string) => {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { name } },
-    });
-    setLoading(false);
-    if (error) return { error: error.message };
-    return {};
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { 
+          data: { name },
+          emailRedirectTo: `${window.location.origin}/auth/confirm`
+        },
+      });
+      if (error) {
+        setLoading(false);
+        return { error: error.message };
+      }
+      if (!data.user) {
+        setLoading(false);
+        return { error: 'Não foi possível criar o usuário. Verifique o email.' };
+      }
+      setLoading(false);
+      return {};
+    } catch (err: any) {
+      setLoading(false);
+      return { error: err?.message || 'Erro desconhecido ao criar conta.' };
+    }
   };
 
   const logout = async () => {
