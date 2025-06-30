@@ -1,103 +1,170 @@
-import Image from "next/image";
+'use client';
+import Link from 'next/link';
+import { CheckCircle, Rocket, User, Users, Star, Shield, HelpCircle, TrendingUp, Smile, DollarSign } from 'lucide-react';
+import Button from '../components/ui/button';
+import Card from '../components/ui/card';
+import { useEffect } from 'react';
 
-export default function Home() {
+export default function HomePage() {
+  // Smooth scroll para âncoras
+  useEffect(() => {
+    const handleClick = (e: any) => {
+      if (e.target.matches('a[href^="#"]')) {
+        e.preventDefault();
+        const id = e.target.getAttribute('href').replace('#', '');
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 text-white">
+      {/* HERO */}
+      <section className="flex flex-col items-center justify-center min-h-[80vh] px-4 text-center relative z-10">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg animate-fade-in">
+          Gere seu <span className="bg-gradient-to-r from-blue-300 to-purple-400 bg-clip-text text-transparent">Plano de Negócios Profissional</span> em 15 Minutos
+        </h1>
+        <p className="text-lg md:text-2xl mb-8 max-w-2xl mx-auto animate-fade-in delay-100">
+          Com inteligência artificial, crie planos completos, bonitos e prontos para investidores — sem complicação.
+        </p>
+        <Link href="/signup">
+          <Button className="px-8 py-4 text-lg font-bold shadow-xl bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition-all animate-fade-in delay-200">
+            Comece Agora
+          </Button>
+        </Link>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* COMO FUNCIONA */}
+      <section id="como-funciona" className="py-20 px-4 bg-white text-gray-900">
+        <h2 className="text-3xl font-bold text-center mb-12">Como funciona?</h2>
+        <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto">
+          <Card className="flex-1 flex flex-col items-center p-8 shadow-lg hover:scale-105 transition-transform duration-300">
+            <User className="w-10 h-10 text-blue-500 mb-4" />
+            <h3 className="font-semibold text-xl mb-2">1. Crie sua conta</h3>
+            <p className="text-gray-600 text-center">Cadastre-se rapidamente e acesse a plataforma.</p>
+          </Card>
+          <Card className="flex-1 flex flex-col items-center p-8 shadow-lg hover:scale-105 transition-transform duration-300">
+            <Rocket className="w-10 h-10 text-purple-500 mb-4" />
+            <h3 className="font-semibold text-xl mb-2">2. Preencha o formulário</h3>
+            <p className="text-gray-600 text-center">Responda perguntas simples sobre seu negócio. A IA faz o resto.</p>
+          </Card>
+          <Card className="flex-1 flex flex-col items-center p-8 shadow-lg hover:scale-105 transition-transform duration-300">
+            <CheckCircle className="w-10 h-10 text-green-500 mb-4" />
+            <h3 className="font-semibold text-xl mb-2">3. Baixe seu plano</h3>
+            <p className="text-gray-600 text-center">Receba um PDF pronto para apresentar a investidores ou bancos.</p>
+          </Card>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* SOCIAL PROOF */}
+      <section className="py-20 px-4 bg-gradient-to-r from-blue-50 to-purple-100 text-gray-900">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+          <div className="flex-1 grid grid-cols-2 gap-6">
+            <div className="flex flex-col items-center">
+              <TrendingUp className="w-8 h-8 text-blue-500 mb-2" />
+              <span className="text-2xl font-bold">+2.500</span>
+              <span className="text-gray-600">Planos gerados</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Users className="w-8 h-8 text-purple-500 mb-2" />
+              <span className="text-2xl font-bold">+1.800</span>
+              <span className="text-gray-600">Empreendedores atendidos</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Star className="w-8 h-8 text-yellow-500 mb-2" />
+              <span className="text-2xl font-bold">4.9/5</span>
+              <span className="text-gray-600">Avaliação média</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Shield className="w-8 h-8 text-green-500 mb-2" />
+              <span className="text-2xl font-bold">100%</span>
+              <span className="text-gray-600">Privacidade garantida</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <p className="text-lg italic mb-4">“O BusinessPlan.ai me ajudou a conseguir investimento em tempo recorde. O plano ficou incrível!”</p>
+              <div className="flex items-center gap-3">
+                <Smile className="w-8 h-8 text-blue-500" />
+                <span className="font-semibold">Marina Souza</span>
+                <span className="text-gray-400 text-sm">Fundadora da TechStart</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PLANOS */}
+      <section id="planos" className="py-20 px-4 bg-white text-gray-900">
+        <h2 className="text-3xl font-bold text-center mb-12">Escolha seu plano</h2>
+        <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto">
+          <Card className="flex-1 p-8 shadow-xl border-2 border-blue-400 bg-gradient-to-br from-blue-50 to-white hover:scale-105 transition-transform duration-300">
+            <h3 className="text-xl font-bold mb-2 text-blue-600 flex items-center gap-2"><User /> Starter</h3>
+            <div className="text-4xl font-extrabold mb-2">R$ 97</div>
+            <ul className="mb-6 space-y-2">
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />1 plano PDF</li>
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />Suporte básico</li>
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />Acesso imediato</li>
+            </ul>
+            <Link href="/signup">
+              <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded transition-all">Começar com Starter</Button>
+            </Link>
+          </Card>
+          <Card className="flex-1 p-8 shadow-2xl border-2 border-purple-500 bg-gradient-to-br from-purple-50 to-white hover:scale-105 transition-transform duration-300 relative overflow-hidden">
+            <div className="absolute top-4 right-4 bg-purple-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow">Mais Popular</div>
+            <h3 className="text-xl font-bold mb-2 text-purple-700 flex items-center gap-2"><Rocket /> Professional</h3>
+            <div className="text-4xl font-extrabold mb-2">R$ 197</div>
+            <ul className="mb-6 space-y-2">
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />Planos ilimitados</li>
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />Suporte prioritário</li>
+              <li className="flex items-center gap-2"><CheckCircle className="text-green-500" size={18} />Acesso vitalício</li>
+            </ul>
+            <Link href="/signup">
+              <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded transition-all">Quero o Professional</Button>
+            </Link>
+          </Card>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-20 px-4 bg-gradient-to-r from-blue-50 to-purple-100 text-gray-900">
+        <h2 className="text-3xl font-bold text-center mb-12">Perguntas Frequentes</h2>
+        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-8">
+          <FAQItem q="Preciso de cartão de crédito para testar?" a="Não! Você pode criar sua conta e simular seu plano sem compromisso." />
+          <FAQItem q="O plano é realmente aceito por bancos?" a="Sim! O PDF gerado segue padrões exigidos por investidores e bancos." />
+          <FAQItem q="Posso editar o plano depois?" a="Sim, você pode revisar e editar antes de baixar o PDF final." />
+          <FAQItem q="É seguro compartilhar meus dados?" a="Totalmente seguro. Seus dados são criptografados e nunca vendidos." />
+          <FAQItem q="Quanto tempo demora para gerar?" a="Em média, menos de 15 minutos após preencher o formulário." />
+          <FAQItem q="Posso pedir reembolso?" a="Sim, garantimos reembolso total em até 7 dias se não ficar satisfeito." />
+        </div>
+      </section>
+
+      {/* CTA FINAL */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white text-center">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-6">Pronto para criar seu plano de negócios?</h2>
+        <p className="text-lg mb-8">Junte-se a milhares de empreendedores e tire sua ideia do papel hoje mesmo.</p>
+        <Link href="/signup">
+          <Button className="px-10 py-4 text-lg font-bold shadow-xl bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 transition-all">
+            Começar agora
+          </Button>
+        </Link>
+      </section>
+    </div>
+  );
+}
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  return (
+    <div className="bg-white rounded-lg shadow p-6 animate-fade-in">
+      <div className="flex items-center gap-2 mb-2">
+        <HelpCircle className="text-blue-500" size={20} />
+        <span className="font-semibold text-lg">{q}</span>
+      </div>
+      <p className="text-gray-700">{a}</p>
     </div>
   );
 }
