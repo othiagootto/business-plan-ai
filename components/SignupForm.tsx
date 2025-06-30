@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from './AuthProvider';
 import Button from './ui/button';
 import Input from './ui/input';
+import { useRouter } from 'next/navigation';
 
 const signupSchema = z.object({
   name: z.string().min(2, 'Nome obrigatório'),
@@ -18,7 +19,9 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export default function SignupForm() {
   const { signup } = useAuth();
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -28,8 +31,14 @@ export default function SignupForm() {
   const onSubmit = async (data: SignupFormValues) => {
     setLoading(true);
     setError(null);
+    setSuccess(null);
     const result = await signup(data.name, data.email, data.password);
-    if (result.error) setError(result.error);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setSuccess('Conta criada com sucesso! Redirecionando...');
+      setTimeout(() => router.push('/dashboard'), 1200);
+    }
     setLoading(false);
   };
 
@@ -52,6 +61,7 @@ export default function SignupForm() {
         {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
       </div>
       {error && <div className="text-red-600 text-sm text-center">{error}</div>}
+      {success && <div className="text-green-600 text-sm text-center">{success}</div>}
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? 'Criando conta...' : 'Criar conta'}
       </Button>
